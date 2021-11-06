@@ -14,6 +14,10 @@ using namespace std;
 #define INFO_BUFFER_SIZE 32767
 #define BUFSIZE MAX_PATH
 #define FILESYSNAMEBUFSIZE MAX_PATH
+
+double PCFreq = 0.0;
+__int64 CounterStart = 0;
+
 int main()
 {
     //punkt1
@@ -83,5 +87,18 @@ int main()
     }
 
     RegCloseKey(hKey);
+
+    //zadanie2
+     LARGE_INTEGER li;
+    LARGE_INTEGER t;
+
+    QueryPerformanceCounter(&li);
+    CounterStart = li.QuadPart;
+    QueryPerformanceFrequency(&t);
+    QueryPerformanceCounter(&t);
+    cout << "2.2.  CPU clock count: " << double((t.QuadPart - CounterStart) * 1000000) / PCFreq << "  us \n";
+    PCFreq = double(li.QuadPart);
+    printf("\n2.1.  CPU frequency: %ll  Hz\n", li);
+
     return 0;
 }
